@@ -9,29 +9,21 @@ import java.util.stream.Collectors;
 public class WebScraping {
     public static void main(String[] args) {
         System.out.println("test");
+        
+        final String URL = "https://www.euro.com.pl/telefony-komorkowe,strona-1.bhtml";
 
-
-        final String url = "https://www.euro.com.pl/telefony-komorkowe,strona-1.bhtml";
-
-
-        try{
-            final Document document = Jsoup.connect(url).get();
+        try {
+            final Document document = Jsoup.connect(URL).get();
             Element phones = document.getElementById("products");
             Set<String> phonesLinks = phones.getElementsByClass("productHref").stream().map(row -> row.attributes().get("value")).collect(Collectors.toSet());
             System.out.println(phonesLinks);
 
-//            phonesLinks.forEach(Product::new);
             phonesLinks.stream().skip(4).limit(1).forEach(Product::new);
-            //System.out.println(document.outerHtml());
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

@@ -13,102 +13,63 @@ public class Product {
     private int price;
     private int stars;
     private List<Opinion> opinionList = new ArrayList<>();
-    private int opinionsNumber;
-    final String prefixUrl = "https://www.euro.com.pl";
+    private int opinionsSize;
+    private static final String WEBSITE_URL = "https://www.euro.com.pl";
+    private static final String OPINIONS_URL_PREFFIX = "https://www.euro.com.pl/product-card-opinion.ltr?nodeid=telefony-komorkowe&product-id=";
+    private static final String OPINIONS_URL_SUFFIX = "&group-id=698969&preview=false&sort=DEFAULT&scrollTo=false&page_nr=";
 
     public Product(String url) {
         System.out.println("start adding product");
 
-        try{
-            final Document document = Jsoup.connect(prefixUrl+url).get();
-//            Elements phone = document.head().getElementsByAttribute("name");
-//            String test = phone.get(1).attributes().get("content");
-//                    //.getElementsByAttribute("name").get(1).attributes().get("content");
-//            this.name = phone.get(1).attributes().get("content");
-//            this.name = document.head().getElementsByAttribute("name").get(1).attributes().get("content");
+        try {
+            final Document document = Jsoup.connect(WEBSITE_URL + url).get();
 
-
-//            final Connection.Response document1 = Jsoup.connect(prefixUrl+url)
-//                    .userAgent("Mozilla/5.0")
-//                    .data("nodeid","telefony-komorkowe")
-//                    .data("product-id","huawei-smartfon-p30-pro-6-128-twilight")
-//                    .data("group-id","698969")
-//                    .data("sort","DEFAULT")
-//                    .data("scrollTo","false")
-//                    .data("page_nr","3")
-//                    .method(Connection.Method.GET)
-//                    .execute();
-////                    .post();
-//
-////            ?System.out.println("response "+document1);
-//            Document document = document1.parse();
-
-//            System.out.println("codument = "+document);
-
-//            Elements asd = document.getElementsByClass("div.paging-numbers");
-
-
-            document.select("div.paging-numbers > a")
-                    .forEach(s-> System.out.println(s.select("div.opinion-item").size()));
-
-            this.name =  document.select("h1.selenium-KP-product-name").get(0).ownText();
-            this.price = Integer.parseInt(document.select("div.price-normal.selenium-price-normal").get(0).ownText().replace("zł","").replace(" ",""));
+            this.name = document.select("h1.selenium-KP-product-name").get(0).ownText();
+            this.price = Integer.parseInt(document.select("div.price-normal.selenium-price-normal").get(0).ownText().replace("zł", "").replace(" ", ""));
 
             //TODO make it optional can be 0 opinions
             try {
                 this.stars = Integer.parseInt(document.select("div.opinion-summary-total > span").get(0).ownText());
-            }catch(IndexOutOfBoundsException e){
-                this.stars=0;
+            } catch (IndexOutOfBoundsException e) {
+                this.stars = 0;
+            }
+
+            //TODO check what if 0
+            this.opinionsSize = Integer.parseInt(document.select("a.js-save-keyword.js-scroll-by-hash.rating-count > em").get(0).text().replaceAll("[^0-9]", ""));
+
+            System.out.println("name: " + name);
+            System.out.println("price: " + price);
+            System.out.println("stars: " + stars);
+            System.out.println("size of opinions " + opinionsSize);
+
+//          /telefony-komorkowe/xiaomi-smartfon-redmi-note-8pro-64g-gra-xiaomi.bhtml -> xiaomi-smartfon-redmi-note-8pro-64g-gra-xiaomi
+            System.out.println("opinions " + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")));
+
+
+            for (int i = 1; i <= opinionsSize / 10 + 1; i++) {
+                createOpinions(i, url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")));
             }
 
 
-            System.out.println("name: "+name);
-            System.out.println("price: " +price);
-            System.out.println("stars: " + stars);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void createOpinions(int pageNumber, String url) {
+        try {
+            final Document document = Jsoup.connect(OPINIONS_URL_PREFFIX + url + OPINIONS_URL_SUFFIX + pageNumber).get();
 
-            System.out.println("SIZE "+document.select("div.paging-number"));
-
-
-
-            System.out.println("size of opinions "+document.select("div.opinion-item").size());
-//            Element asd = document.select("div.opinion-item").get(0);
             Elements webOpinionList = document.select("div.opinion-item");
 
-
-
-            //Adding opinions
-            for (Element element: webOpinionList){
+            for (Element element : webOpinionList) {
                 opinionList.add(new Opinion(name, element));
             }
 
 
-
-//            for(Element e: asd){
-//                System.out.println("test "+e.toString());
-//            }
-
-//            Elements phone = document.getElementsByClass("has-basic-tech-details");
-//            //System.out.println("HERE: "+phone.toString().substring());
-//            String test = phone.select("h3").toString();
-//            test = test.replace(" smartfon ","");
-//            test =test.substring(test.indexOf(">")+1,test.lastIndexOf("<"));
-//            this.name=test;
-//            System.out.println(test);
-
-
-
-//            Element resultLinks = document.select("description-tech-content").first();
-                //System.out.println(phone);
-//            Element phones = document.getElementById("products");
-//            Set<String> phonesLinks = phones.getElementsByClass("productHref").stream().map(row -> row.attributes().get("value")).collect(Collectors.toSet());
-//            System.out.println(phonesLinks);
-//
-////            phonesLinks.forEach(Product::new);
-//            phonesLinks.stream().limit(1).forEach(Product::new);
-//            System.out.println(document.outerHtml());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
