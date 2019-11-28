@@ -41,7 +41,7 @@ public class WebScraping {
                 case 2:
                     if (previous == 4) {
                         System.out.println("Extracting");
-                        documentList = extract("https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
+                        documentList = Extract.getDocuments("https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
                         previous = 2;
                     } else {
                         System.out.println("u need to finish current etl process");
@@ -51,7 +51,7 @@ public class WebScraping {
                 case 3:
                     if (previous == 2) {
                         System.out.println("transforming");
-                        opinionList = transform(documentList);
+                        opinionList = Transform.transformDocuments(documentList);
                         previous = 3;
                     } else {
                         System.out.println("u need to do extract before");
@@ -63,7 +63,7 @@ public class WebScraping {
                         load(opinionList);
                         previous = 4;
                     } else {
-                        System.out.println("u need to do extract before");
+                        System.out.println("u need to do transform before");
                     }
                     break;
                 case 5:
@@ -75,17 +75,9 @@ public class WebScraping {
     }
 
     private static void etl(String url) {
-        documentList = extract(url);
-        opinionList = transform(documentList);
+        documentList =  Extract.getDocuments(url);
+        opinionList = Transform.transformDocuments(documentList);
         load(opinionList);
-    }
-
-    private static List<Document> extract(String url) {
-        return Extract.getDocuments(url);
-    }
-
-    private static List<Opinion> transform(List<Document> documentList) {
-        return Transform.transformDocuments(documentList);
     }
 
     private static void load(List<Opinion> opinionList) {
