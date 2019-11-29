@@ -9,6 +9,7 @@ public class WebScraping {
     private static List<Document> documentList = new ArrayList<>();
     private static List<Opinion> opinionList = new ArrayList<>();
     private static OpinionDAO b = new OpinionDAO();
+
     public static void main(String[] args) throws IOException {
         System.out.println("test");
 
@@ -23,6 +24,7 @@ public class WebScraping {
             System.out.println("3 - T");
             System.out.println("4 - L");
             System.out.println("5 - Clear database");
+            System.out.println("6 - Convert to .csv");
             while (!scanner.hasNextInt()) {
                 System.out.println("choose number");
                 scanner.next();
@@ -70,25 +72,29 @@ public class WebScraping {
                     clearDB();
                     System.out.println("database cleared");
                     break;
+                case 6:
+                    CsvConverter.convertToCsv(opinionList);
+                    break;
             }
         }
     }
 
     private static void etl(String url) {
-        documentList =  Extract.getDocuments(url);
+        documentList = Extract.getDocuments(url);
         opinionList = Transform.transformDocuments(documentList);
         load(opinionList);
     }
 
     private static void load(List<Opinion> opinionList) {
-        opinionList.forEach(opinion-> b.insertOpinion(opinion));
+        opinionList.forEach(opinion -> b.insertOpinion(opinion));
         b.closeConnection();
     }
 
-    private static void clearDB(){
+    private static void clearDB() {
         b.dropDB();
         b.closeConnection();
     }
+
 }
 
 
