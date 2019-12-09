@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WebScraping {
-    public static int d;
     private static List<Document> documentList = new ArrayList<>();
     private static List<Opinion> opinionList = new ArrayList<>();
     private static OpinionDAO b = new OpinionDAO();
@@ -22,6 +21,7 @@ public class WebScraping {
             System.out.println("4 - L");
             System.out.println("5 - Clear database");
             System.out.println("6 - Convert to .csv");
+            System.out.println("0 - Exit");
             System.out.println("Choose what to do: ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Choose number");

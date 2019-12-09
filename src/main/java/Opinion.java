@@ -56,7 +56,6 @@ public class Opinion {
                 "\n content: " + opinionContent +
                 "\n nick: " + nick +
                 "\n stars: " + stars +
-                "\n stars: " + stars +
                 "\n date: " + opinionDate +
                 "\n votesFo: " + votesFor +
                 "\n votesAgainst: " + votesAgainst;

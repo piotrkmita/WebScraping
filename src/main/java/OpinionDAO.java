@@ -39,7 +39,7 @@ public class OpinionDAO {
         return true;
     }
 
-    public boolean insertOpinion(Opinion opinion) { //String header, String opinionContent, String nick, String stars, LocalDate opinionDate, int votesFor, int votesAgainst
+    public boolean insertOpinion(Opinion opinion) {
         try {
 
             PreparedStatement prepStmt = conn.prepareStatement(
