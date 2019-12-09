@@ -32,7 +32,7 @@ public class CsvConverter {
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(opinion.getNick());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(opinion.getStars());
+                fileWriter.append(String.valueOf(opinion.getStars()));
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(opinion.getDate()));
                 fileWriter.append(COMMA_DELIMITER);
@@ -66,6 +66,6 @@ public class CsvConverter {
     public static void convertToCsv(List<Opinion> opinionList) {
         String fileName = System.getProperty("user.home") + "\\opinions.csv";
         CsvConverter.writeCsvFile(fileName, opinionList);
-        System.out.println("Csv created");
+        System.out.println("CSV file created");
     }
 }

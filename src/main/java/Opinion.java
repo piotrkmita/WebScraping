@@ -6,15 +6,16 @@ public class Opinion {
     private String header;
     private String opinionContent;
     private String nick;
-    private String stars;
+    private double stars;
     private LocalDate opinionDate;
     private int votesFor;
     private int votesAgainst;
 
-    public Opinion(String header, String opinionContent, String nick, LocalDate opinionDate, int votesFor, int votesAgainst) {
+    public Opinion(String header, String opinionContent, String nick, double stars, LocalDate opinionDate, int votesFor, int votesAgainst) {
         this.header = header;
         this.opinionContent = opinionContent;
         this.nick = nick;
+        this.stars = stars;
         this.opinionDate = opinionDate;
         this.votesFor = votesFor;
         this.votesAgainst = votesAgainst;
@@ -32,7 +33,7 @@ public class Opinion {
         return nick;
     }
 
-    public String getStars() {
+    public double getStars() {
         return stars;
     }
 
@@ -50,15 +51,15 @@ public class Opinion {
 
     @Override
     public String toString() {
-        return "Opinion{" +
-                "header='" + header + '\'' +
-                ", content='" + opinionContent + '\'' +
-                ", nick='" + nick + '\'' +
-                ", stars='" + stars + '\'' +
-                ", date=" + opinionDate +
-                ", votesFor=" + votesFor +
-                ", votesAgainst=" + votesAgainst +
-                '}';
+        return "\n Opinion: " +
+                "\n header: " + header +
+                "\n content: " + opinionContent +
+                "\n nick: " + nick +
+                "\n stars: " + stars +
+                "\n stars: " + stars +
+                "\n date: " + opinionDate +
+                "\n votesFo: " + votesFor +
+                "\n votesAgainst: " + votesAgainst;
     }
 
 
