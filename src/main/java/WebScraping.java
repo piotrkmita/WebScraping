@@ -31,7 +31,16 @@ public class WebScraping {
             switch (command) {
                 case 1:
                     if (previous == 4) {
-                        etl("https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
+                        try {
+                            Scanner scanner2 = new Scanner(System.in);
+                            System.out.println("Enter product url");
+                            String link = scanner2.next().trim();
+                            etl(link);
+                        }catch(IOException e) {
+                            System.out.println("Wrong url");
+                            System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
+                        }
+
                     } else {
                         System.out.println("You need to finish current ETL process");
                         System.out.println("Last process step was " + previous);
@@ -39,8 +48,17 @@ public class WebScraping {
                     break;
                 case 2:
                     if (previous == 4) {
-                        documentList = Extract.getDocuments("https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
-                        previous = 2;
+                        try {
+                            Scanner scanner2 = new Scanner(System.in);
+                            System.out.println("Enter product url");
+                            String link = scanner2.next().trim();
+                            documentList = Extract.getDocuments(link);
+                            previous = 2;
+                        }catch (IOException e){
+                            System.out.println("Wrong url");
+                            System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
+                        }
+
                     } else {
                         System.out.println("You need to finish current ETL process");
                         System.out.println("Last process step was " + previous);
@@ -75,7 +93,7 @@ public class WebScraping {
         }
     }
 
-    private static void etl(String url) {
+    private static void etl(String url) throws IOException {
         clearDB();
         documentList = Extract.getDocuments(url);
         System.out.println("Transforming...");
