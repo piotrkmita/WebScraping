@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class responsible for extracting all htmls with product data and opinions
+ */
 public class Extract {
     private static final String OPINIONS_URL_PREFFIX = "https://www.euro.com.pl/product-card-opinion.ltr?nodeid=telefony-komorkowe&product-id=";
     private static final String OPINIONS_URL_SUFFIX = "&group-id=698969&preview=false&sort=DEFAULT&scrollTo=false&page_nr=";
@@ -12,6 +15,11 @@ public class Extract {
     private Extract() {
     }
 
+    /**
+     * Takes URL and gets all html documents with product info and opinions
+     * @param url
+     * @return
+     */
     public static List<Document> getDocuments(String url) {
         List<Document> documentList = new ArrayList<>();
         int opinionsSize = 0;
@@ -30,6 +38,12 @@ public class Extract {
         return documentList;
     }
 
+    /**
+     * Takes page number and url and gets html document
+     * @param pageNumber
+     * @param url
+     * @return
+     */
     private static Document getDocument(int pageNumber, String url) {
         Document document = null;
         try {

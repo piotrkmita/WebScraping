@@ -7,12 +7,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class responsible for transforming htmls to opinion objects
+ */
 public class Transform {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy,");
 
     private Transform() {
     }
 
+    /**
+     * Takes list of documents and transform to opinions list
+     * @param documentList
+     * @return
+     */
     public static List<Opinion> transformDocuments(List<Document> documentList) {
         List<Opinion> opinionList = new ArrayList<>();
         System.out.println("Transforming documents for objects");
@@ -28,6 +36,11 @@ public class Transform {
     }
 
 
+    /**
+     * Takes element and creates opinion
+     * @param element
+     * @return
+     */
     private static Opinion createOpinion(Element element) {
         String header = element.select("div.opinion-title").text();
         String content = element.select("div.opinion-text").text();

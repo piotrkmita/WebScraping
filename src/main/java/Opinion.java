@@ -1,7 +1,9 @@
 import java.time.LocalDate;
 
+/**
+ * Opinion entity
+ */
 public class Opinion {
-
 
     private String header;
     private String opinionContent;

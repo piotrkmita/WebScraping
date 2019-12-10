@@ -1,13 +1,19 @@
 import java.sql.*;
 
+/**
+ * Class responsible for database access
+ */
 public class OpinionDAO {
-    public static final String DRIVER = "org.sqlite.JDBC";
-    public static final String DB_URL = "jdbc:sqlite:opinionDatabase.db";
+    private static final String DRIVER = "org.sqlite.JDBC";
+    private static final String DB_URL = "jdbc:sqlite:opinionDatabase.db";
     public boolean dbDropped = false;
 
     private Connection conn;
     private Statement stat;
 
+    /**
+     * Constructor
+     */
     public OpinionDAO() {
         try {
             Class.forName(OpinionDAO.DRIVER);
@@ -27,6 +33,10 @@ public class OpinionDAO {
         createTables();
     }
 
+    /**
+     * Method creating database table opinions
+     * @return boolean true if done otherwise false
+     */
     public boolean createTables() {
         String createOpinions = "CREATE TABLE IF NOT EXISTS opinions (id_opinion INTEGER PRIMARY KEY AUTOINCREMENT, header varchar(255) , opinionContent varchar(255), nick varchar(255), stars double, opinionDate date, votesFor int, votesAgainst int)";
         try {
@@ -39,6 +49,11 @@ public class OpinionDAO {
         return true;
     }
 
+    /**
+     * Takes opinion and insert it to database
+     * @param opinion
+     * @return
+     */
     public boolean insertOpinion(Opinion opinion) {
         try {
 
@@ -60,6 +75,9 @@ public class OpinionDAO {
         return true;
     }
 
+    /**
+     * Close connection to database
+     */
     public void closeConnection() {
         try {
             conn.close();
@@ -69,6 +87,9 @@ public class OpinionDAO {
         }
     }
 
+    /**
+     * Open connection to database
+     */
     public void openConnection() {
         try {
             conn = DriverManager.getConnection(DB_URL);
@@ -79,7 +100,9 @@ public class OpinionDAO {
         }
     }
 
-
+    /**
+     * Drop database
+     */
     public void dropDB() {
         try {
             conn = DriverManager.getConnection(DB_URL);

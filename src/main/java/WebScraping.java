@@ -5,11 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class with menu
+ */
 public class WebScraping {
     private static List<Document> documentList = new ArrayList<>();
     private static List<Opinion> opinionList = new ArrayList<>();
-    private static OpinionDAO b = new OpinionDAO();
+    private static OpinionDAO opinionDAO = new OpinionDAO();
 
+    /**
+     * Main menu
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         int command = 1;
         int previous = 4;
@@ -75,30 +83,43 @@ public class WebScraping {
         }
     }
 
+    /**
+     * Method performing whole etl process.
+     * Takes URL of product from rtveuroagd website
+     * @param url
+     */
     private static void etl(String url) {
         clearDB();
         documentList = Extract.getDocuments(url);
         System.out.println("Transforming...");
         opinionList = Transform.transformDocuments(documentList);
-        b.closeConnection();
+        opinionDAO.closeConnection();
         load(opinionList);
     }
 
+    /**
+     * Method loading opinions to database
+     * Takes opinionList
+     * @param opinionList
+     */
     private static void load(List<Opinion> opinionList) {
         System.out.println("Loading...");
         clearDB();
-        b.openConnection();
-        if (b.dbDropped) {
-            b.createTables();
+        opinionDAO.openConnection();
+        if (opinionDAO.dbDropped) {
+            opinionDAO.createTables();
         }
-        opinionList.forEach(opinion -> b.insertOpinion(opinion));
+        opinionList.forEach(opinion -> opinionDAO.insertOpinion(opinion));
         System.out.println(opinionList.size() + " opinions loaded to database.");
-        b.closeConnection();
+        opinionDAO.closeConnection();
     }
 
+    /**
+     * Method clearing database
+     */
     private static void clearDB() {
-        b.dropDB();
-        b.closeConnection();
+        opinionDAO.dropDB();
+        opinionDAO.closeConnection();
     }
 
 }

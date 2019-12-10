@@ -2,6 +2,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class responsible for converting data to csv file
+ */
 public class CsvConverter {
     //Delimiter used in CSV file
     private static final String COMMA_DELIMITER = ";";
@@ -10,7 +13,11 @@ public class CsvConverter {
     //CSV file header
     private static final String FILE_HEADER = "header;content;nick;stars;date;votesFor;votesAgainst";
 
-
+    /**
+     * Takes file name, convert opinion list and create CSV File with that list
+     * @param fileName
+     * @param opinionList
+     */
     private static void writeCsvFile(String fileName, List<Opinion> opinionList) {
 
         FileWriter fileWriter = null;
@@ -62,7 +69,10 @@ public class CsvConverter {
         }
     }
 
-
+    /**
+     * Takes opinion list create file opinions.csv in user home
+     * @param opinionList
+     */
     public static void convertToCsv(List<Opinion> opinionList) {
         String fileName = System.getProperty("user.home") + "\\opinions.csv";
         CsvConverter.writeCsvFile(fileName, opinionList);
