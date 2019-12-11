@@ -91,10 +91,14 @@ public class WebScraping {
     private static void etl(String url) {
         clearDB();
         documentList = Extract.getDocuments(url);
-        System.out.println("Transforming...");
-        opinionList = Transform.transformDocuments(documentList);
-        opinionDAO.closeConnection();
-        load(opinionList);
+        if(documentList.isEmpty()){
+            System.out.println("No opinions found, please choose different product");
+        }else {
+            System.out.println("Transforming...");
+            opinionList = Transform.transformDocuments(documentList);
+            opinionDAO.closeConnection();
+            load(opinionList);
+        }
     }
 
     /**

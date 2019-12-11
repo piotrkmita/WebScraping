@@ -25,9 +25,14 @@ public class Extract {
         int opinionsSize = 0;
         try {
             final Document document = Jsoup.connect(url).get();
-            opinionsSize = Integer.parseInt(document.select("a.js-save-keyword.js-scroll-by-hash.rating-count > em").get(0).text().replaceAll("[^0-9]", ""));
             String name = document.select("h1.selenium-KP-product-name").get(0).ownText();
             System.out.println("Extracting data for " + name + "...\n");
+            try {
+                opinionsSize = Integer.parseInt(document.select("a.js-save-keyword.js-scroll-by-hash.rating-count > em").get(0).text().replaceAll("[^0-9]", ""));
+            }catch(Exception e){
+                return documentList;
+            }
+
             for (int i = 1; i <= opinionsSize / 10 + 1; i++) {
                 documentList.add(getDocument(i, url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."))));
             }
