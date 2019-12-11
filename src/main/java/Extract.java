@@ -20,10 +20,10 @@ public class Extract {
      * @param url
      * @return
      */
-    public static List<Document> getDocuments(String url) {
+    public static List<Document> getDocuments(String url) throws IOException {
         List<Document> documentList = new ArrayList<>();
         int opinionsSize = 0;
-        try {
+//        try {
             final Document document = Jsoup.connect(url).get();
             String name = document.select("h1.selenium-KP-product-name").get(0).ownText();
             System.out.println("Extracting data for " + name + "...\n");
@@ -36,9 +36,9 @@ public class Extract {
             for (int i = 1; i <= opinionsSize / 10 + 1; i++) {
                 documentList.add(getDocument(i, url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."))));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         System.out.println("Extracted: " + documentList.size() + " htmls files with " + opinionsSize + " opinions ");
         return documentList;
     }
