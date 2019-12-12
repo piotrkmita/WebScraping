@@ -18,7 +18,7 @@ public class WebScraping {
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int command = 1;
         int previous = 4;
         Scanner scanner = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class WebScraping {
                             System.out.println("Enter product url");
                             String link = scanner2.next().trim();
                             etl(link);
-                        }catch(IOException e) {
+                        }catch(Exception e) {
                             System.out.println("Wrong url");
                             System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
                         }
@@ -62,7 +62,7 @@ public class WebScraping {
                             String link = scanner2.next().trim();
                             documentList = Extract.getDocuments(link);
                             previous = 2;
-                        }catch (IOException e){
+                        }catch (Exception e){
                             System.out.println("Wrong url");
                             System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
                         }
@@ -106,7 +106,7 @@ public class WebScraping {
      * Takes URL of product from rtveuroagd website
      * @param url
      */
-    private static void etl(String url) throws IOException {
+    private static void etl(String url) throws Exception {
         clearDB();
         documentList = Extract.getDocuments(url);
         if(documentList.isEmpty()){
