@@ -46,6 +46,7 @@ public class WebScraping {
                             etl(link);
                         }catch(Exception e) {
                             System.out.println("Wrong url");
+                            System.out.println("Choose product from https://www.euro.com.pl/telefony-komorkowe.bhtml");
                             System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
                         }
 
@@ -64,6 +65,7 @@ public class WebScraping {
                             previous = 2;
                         }catch (Exception e){
                             System.out.println("Wrong url");
+                            System.out.println("Choose product from https://www.euro.com.pl/telefony-komorkowe.bhtml");
                             System.out.println("Example: https://www.euro.com.pl/telefony-komorkowe/xiaomi-redmi-note-7-4-64-gb-czarny.bhtml");
                         }
 
